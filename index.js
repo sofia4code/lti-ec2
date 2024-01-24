@@ -5,6 +5,7 @@ const routes = require('./src/routes')
 const lti = require('ltijs').Provider
 
 // Setup
+
 lti.setup(process.env.LTI_KEY,
   {
     url: 'mongodb://' + process.env.DB_HOST + '/' + process.env.DB_NAME + '?authSource=admin',
@@ -33,19 +34,19 @@ lti.app.use(routes)
 
 // Setup function
 const setup = async () => {
-  await lti.deploy({ port: process.env.PORT })
+  await lti.deploy({ port: 80 })
 
   /**
    * Register platform
    */
-  /* await lti.registerPlatform({
-    url: 'http://localhost/moodle',
+  await lti.registerPlatform({
+    url: 'https://blackboard.com',
     name: 'Platform',
-    clientId: 'CLIENTID',
-    authenticationEndpoint: 'http://localhost/moodle/mod/lti/auth.php',
-    accesstokenEndpoint: 'http://localhost/moodle/mod/lti/token.php',
-    authConfig: { method: 'JWK_SET', key: 'http://localhost/moodle/mod/lti/certs.php' }
-  }) */
+    clientId: 'e6ee71b5-519d-40c0-bb36-e481afe6585d',
+    authenticationEndpoint: 'https://developer.anthology.com/api/v1/gateway/oidcauth',
+    accesstokenEndpoint: 'https://developer.anthology.com/api/v1/gateway/oauth2/jwttoken',
+    authConfig: { method: 'JWK_SET', key: 'https://developer.anthology.com/api/v1/management/applications/e6ee71b5-519d-40c0-bb36-e481afe6585d/jwks.json' }
+  }) 
 }
 
 setup()
